@@ -32,7 +32,8 @@ $(document).ready(function(){
                                                               .attr("id", "collapse" + i);
                     let descriptionBody = $("<div></div>").addClass("card-body")
                                                           .text(sight.description);
-                    descriptionCollapse.append(photo, descriptionBody);
+                    if(sight.photoURL != "") descriptionCollapse.append(photo, descriptionBody);
+                    else descriptionCollapse.append(descriptionBody);
                     descriptionCard.append(descriptionHeader, descriptionCollapse);
 
                     body.append(address, bodyContent);
