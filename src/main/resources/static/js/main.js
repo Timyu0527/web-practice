@@ -2,20 +2,19 @@ $(document).ready(function(){
     $('button').click(function(){
         let $sights = $('#content');
         let zone = $(this).text();
-        console.log(zone);
+//        console.log(zone);
         $.ajax({
             method: 'GET',
             url: 'http://localhost:8080/SightAPI?zone=' + zone,
             success: function(sights){
                 $sights.html("");
                 $.each(sights, function(i, sight){
-
                     let accordion= $("<div></div>").attr("id", "accordion");
                     let card = $("<div></div>").addClass("card");
                     let header = $("<div></div>").addClass("card-header").text(sight.sightName);
                     let body = $("<div></div>").addClass("card-body");
-                    body.html("地區：" + sight.zone + "<br>"
-                                + "分類：" + sight.category + "<br>");
+                    body.html("<p>地區：" + sight.zone + "</p>"
+                                + "<p>分類：" + sight.category + "</p>");
                     let address = $("<a></a>").addClass("btn btn-primary")
                                               .attr("id", "address_button")
                                               .attr("href", "https://www.google.com.tw/maps/place/" + sight.address)

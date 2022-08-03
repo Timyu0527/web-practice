@@ -1,11 +1,14 @@
 #address_button{
     box-sizing: border-box;
-    float: right;
 }
 .card{
     width: 30%;
     float: left;
     margin: 17px;
     padding: 0;
+    box-sizing: border-box;
+}
+p{
+    width: 50%;
     box-sizing: border-box;
 }

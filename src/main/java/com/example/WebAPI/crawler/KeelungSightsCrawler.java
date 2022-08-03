@@ -37,10 +37,10 @@ public class KeelungSightsCrawler {
             ex.printStackTrace();
         }
     }
-    private String getPhotoURL(Document document){
+    private String getPhotoURL(Document document, String url){
 //        if(document.select("div.gpic img").isEmpty()) return "";
         Element photoURL = document.select("div.gpic img").first();
-        assert photoURL != null;
+        if(photoURL == null) return "";
         return photoURL.attr("data-src");
     }
     private String getDescription(Document document){
@@ -84,7 +84,7 @@ public class KeelungSightsCrawler {
                 String sightName = getSightName(document);
                 String category = getCategory(document);
                 String zone = getZone(document);
-                String photoURL = getPhotoURL(document);
+                String photoURL = getPhotoURL(document, sightURL);
                 String description = getDescription(document);
                 String address = getAddress(document);
                 this.allSights.add(new Sight(sightName, photoURL, address, zone, category, description));
