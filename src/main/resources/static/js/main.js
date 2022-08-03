@@ -9,18 +9,19 @@ $(document).ready(function(){
             success: function(sights){
                 $sights.html("");
                 $.each(sights, function(i, sight){
-                    let accordion= $("<div></div>").attr("id", "accordion");
+                    let cardDisplay = $("<div></div>").attr("id", "card-display");
                     let card = $("<div></div>").addClass("card");
                     let header = $("<div></div>").addClass("card-header").text(sight.sightName);
                     let body = $("<div></div>").addClass("card-body");
-                    body.html("<p>地區：" + sight.zone + "</p>"
-                                + "<p>分類：" + sight.category + "</p>");
+                    let bodyContent = $("<p></p>");
+                    bodyContent.append("地區：" + sight.zone, "<br>", "分類：" + sight.category);
                     let address = $("<a></a>").addClass("btn btn-primary")
                                               .attr("id", "address_button")
                                               .attr("href", "https://www.google.com.tw/maps/place/" + sight.address)
                                               .text("地址");
-
+                    let descriptionCard = $("<div></div>").addClass("card");
                     let descriptionHeader = $("<div></div>").addClass("card-header");
+                    let photo = $("<img>").attr("src", sight.photoURL);
                     let descriptionTitle = $("<a></a>").addClass("btn")
                                                        .attr("data-bs-toggle", "collapse")
                                                        .attr("href", "#collapse" + i)
@@ -28,16 +29,16 @@ $(document).ready(function(){
                     descriptionHeader.append(descriptionTitle);
 
                     let descriptionCollapse = $("<div></div>").addClass("collapse")
-                                                              .attr("id", "collapse" + i)
-                                                              .attr("data-bs-parent", "#accordion");
+                                                              .attr("id", "collapse" + i);
                     let descriptionBody = $("<div></div>").addClass("card-body")
                                                           .text(sight.description);
-                    descriptionCollapse.append(descriptionBody);
+                    descriptionCollapse.append(photo, descriptionBody);
+                    descriptionCard.append(descriptionHeader, descriptionCollapse);
 
-                    body.append(address, descriptionHeader, descriptionCollapse);
+                    body.append(address, bodyContent);
                     card.append(header, body);
-                    accordion.append(card);
-                    $sights.append(accordion);
+                    cardDisplay.append(card, descriptionCard);
+                    $sights.append(cardDisplay);
                 });
             }
         });
