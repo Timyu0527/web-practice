@@ -1,5 +1,6 @@
-package com.example.WebAPI.sight;
+package com.example.webapi.sight;
 
+//@Documented
 public class Sight {
     private String sightName;
     private String photoURL;

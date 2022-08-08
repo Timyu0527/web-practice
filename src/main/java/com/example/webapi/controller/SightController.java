@@ -1,7 +1,7 @@
-package com.example.WebAPI.controller;
+package com.example.webapi.controller;
 
-import com.example.WebAPI.service.SightService;
-import com.example.WebAPI.sight.Sight;
+import com.example.webapi.service.SightService;
+import com.example.webapi.sight.Sight;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class SightController {
 
     @Autowired

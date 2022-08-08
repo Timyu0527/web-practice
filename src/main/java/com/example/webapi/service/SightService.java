@@ -1,7 +1,7 @@
-package com.example.WebAPI.service;
+package com.example.webapi.service;
 
-import com.example.WebAPI.crawler.KeelungSightsCrawler;
-import com.example.WebAPI.sight.Sight;
+import com.example.webapi.crawler.KeelungSightsCrawler;
+import com.example.webapi.sight.Sight;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

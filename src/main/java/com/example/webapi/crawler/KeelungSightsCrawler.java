@@ -1,6 +1,6 @@
-package com.example.WebAPI.crawler;
+package com.example.webapi.crawler;
 
-import com.example.WebAPI.sight.Sight;
+import com.example.webapi.sight.Sight;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
