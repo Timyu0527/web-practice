@@ -11,8 +11,6 @@ import java.util.List;
 @Service
 public class SightService {
     @Autowired
-    private KeelungSightsCrawler crawler;
-    @Autowired
     private SightRepository repository;
     public List<Sight> getSight(String zone){
         return repository.findByZoneLike(zone);

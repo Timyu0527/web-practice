@@ -15,11 +15,11 @@ import java.util.*;
 public class KeelungSightsCrawler {
     private String url;
     private ArrayList<String> allSightsURLs;
-    @Autowired
-    private SightRepository repository;
+    private ArrayList<Sight> allSights;
     @PostConstruct
     public void init(){
         this.allSightsURLs = new ArrayList<>();
+        this.allSights = new ArrayList<>();
         this.url = "https://www.travelking.com.tw";
         getAllSightURLs();
         getAllSightsInfo();
@@ -70,12 +70,6 @@ public class KeelungSightsCrawler {
         if(content == null) return "";
         return content.text();
     }
-//    public List<Sight> getItem(String zone){
-////        System.out.println("size: " + allSights.size());
-//        return this.allSights.stream()
-//                .filter(s -> s.getZone().equals(zone))
-//                .toList();
-//    }
     private void getAllSightsInfo(){
         int id = 1;
         for(String sightURL : this.allSightsURLs){
@@ -87,12 +81,23 @@ public class KeelungSightsCrawler {
                 String photoURL = getPhotoURL(document, sightURL);
                 String description = getDescription(document);
                 String address = getAddress(document);
-                repository.save(new Sight(id, sightName, photoURL, address, zone, category, description));
+                this.allSights.add(new Sight(id, sightName, photoURL, address, zone, category, description));
                 id++;
             }
             catch (Exception ex){
                 ex.printStackTrace();
             }
         }
+    }
+//    public List<Sight> getItem(String zone){
+//        return this.allSights.stream()
+//                .filter(s -> s.getZone().equals(zone))
+//                .toList();
+//    }
+    public List<Sight> getAllSight(){
+        return this.allSights;
+    }
+    public void clearAllSights(){
+        this.allSights.clear();
     }
 }
