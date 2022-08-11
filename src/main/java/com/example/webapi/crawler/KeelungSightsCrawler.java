@@ -1,26 +1,30 @@
 package com.example.webapi.crawler;
 
+import com.example.webapi.repository.SightRepository;
 import com.example.webapi.sight.Sight;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
 
-@Repository
+@Component
 public class KeelungSightsCrawler {
     private String url;
-    private ArrayList<Sight> allSights;
     private ArrayList<String> allSightsURLs;
+    @Autowired
+    private SightRepository repository;
     @PostConstruct
     public void init(){
-        this.allSights = new ArrayList<Sight>();
-        this.allSightsURLs = new ArrayList<String>();
+        this.allSightsURLs = new ArrayList<>();
         this.url = "https://www.travelking.com.tw";
         getAllSightURLs();
         getAllSightsInfo();
+        this.allSightsURLs.clear();
     }
     private void getAllSightURLs(){
         try {
@@ -38,46 +42,43 @@ public class KeelungSightsCrawler {
         }
     }
     private String getPhotoURL(Document document, String url){
-//        if(document.select("div.gpic img").isEmpty()) return "";
         Element photoURL = document.select("div.gpic img").first();
         if(photoURL == null) return "";
         return photoURL.attr("data-src");
     }
     private String getDescription(Document document){
-//        if(document.select("div.text").isEmpty()) return "";
         Element content = document.select("div.text").first();
-        assert content != null;
+        if(content == null) return "";
         return content.text();
     }
     private String getZone(Document document){
         Element content = document.select("li.bc_last a").first();
-        assert content != null;
+        if(content == null) return "";
         return content.text();
     }
     private String getCategory(Document document){
-//        if(document.select("cite span strong").isEmpty()) return "";
         Element content = document.select("cite span strong").first();
-        assert content != null;
+        if(content == null) return "";
         return content.text();
     }
     private String getSightName(Document document){
-//        if(document.select("h1.h1").isEmpty()) return "";
         Element content = document.select("h1.h1").first();
-        assert content != null;
+        if(content == null) return "";
         return content.text();
     }
     private String getAddress(Document document){
-//        if(document.select("div.address p").isEmpty()) return "";
         Element content = document.select("div.address p").first();
-        assert content != null;
+        if(content == null) return "";
         return content.text();
     }
-    public List<Sight> getItem(String zone){
-        return this.allSights.stream()
-                .filter(s -> s.getZone().equals(zone))
-                .toList();
-    }
+//    public List<Sight> getItem(String zone){
+////        System.out.println("size: " + allSights.size());
+//        return this.allSights.stream()
+//                .filter(s -> s.getZone().equals(zone))
+//                .toList();
+//    }
     private void getAllSightsInfo(){
+        int id = 1;
         for(String sightURL : this.allSightsURLs){
             try{
                 final Document document = Jsoup.connect(url + sightURL).get();
@@ -87,7 +88,8 @@ public class KeelungSightsCrawler {
                 String photoURL = getPhotoURL(document, sightURL);
                 String description = getDescription(document);
                 String address = getAddress(document);
-                this.allSights.add(new Sight(sightName, photoURL, address, zone, category, description));
+                repository.save(new Sight(id, sightName, photoURL, address, zone, category, description));
+                id++;
             }
             catch (Exception ex){
                 ex.printStackTrace();

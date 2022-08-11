@@ -1,21 +1,27 @@
 package com.example.webapi.sight;
 
-//@Documented
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "Sight")
 public class Sight {
+    @Id
+    private int id;
     private String sightName;
     private String photoURL;
     private String address;
     private String zone;
     private String category;
     private String description;
-    public Sight(String _sightName, String _photoURL, String _address,
-                 String _zone, String _category, String _description) {
-        this.sightName = _sightName;
-        this.photoURL = _photoURL;
-        this.address = _address;
-        this.category = _category;
-        this.zone = _zone;
-        this.description = _description;
+    public Sight(int id, String sightName, String photoURL, String address,
+                 String zone, String category, String description) {
+        this.id = id;
+        this.sightName = sightName;
+        this.photoURL = photoURL;
+        this.address = address;
+        this.category = category;
+        this.zone = zone;
+        this.description = description;
     }
     public String getSightName(){
         return this.sightName;

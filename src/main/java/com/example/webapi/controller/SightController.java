@@ -16,8 +16,6 @@ public class SightController {
 
     @Autowired
     private SightService sightService;
-
-
     @GetMapping("SightAPI")
     public ResponseEntity<List<Sight>> getSights(@RequestParam("zone") String zone){
         List<Sight> sights = sightService.getSight(zone + "區");
